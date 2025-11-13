@@ -11,6 +11,9 @@ import authRoutes from './routes/auth.routes';
 import opportunityRoutes from './routes/opportunity.routes';
 import userRoutes from './routes/user.routes';
 import teamRoutes from './routes/team.routes';
+import clientRoutes from './routes/client.routes';
+import dashboardRoutes from './routes/dashboard.routes';
+import exportRoutes from './routes/export.routes';
 
 // Load environment variables
 dotenv.config();
@@ -41,6 +44,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/opportunities', opportunityRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/export', exportRoutes);
 
 // 404 handler (must be after all routes)
 app.use(notFoundHandler);
