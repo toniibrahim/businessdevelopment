@@ -3,10 +3,12 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
 import config from './config/env';
 import { initializeDatabase } from './config/database';
 import { initializeRedis } from './config/redis';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+import { swaggerSpec } from './config/swagger';
 import authRoutes from './routes/auth.routes';
 import opportunityRoutes from './routes/opportunity.routes';
 import userRoutes from './routes/user.routes';
@@ -38,6 +40,12 @@ app.get('/api/health', (req, res) => {
     version: '1.0.0',
   });
 });
+
+// API Documentation
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'BD Pipeline API Documentation',
+}));
 
 // API Routes
 app.use('/api/auth', authRoutes);
