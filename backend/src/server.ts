@@ -8,6 +8,7 @@ import { initializeDatabase } from './config/database';
 import { initializeRedis } from './config/redis';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import authRoutes from './routes/auth.routes';
+import opportunityRoutes from './routes/opportunity.routes';
 
 // Load environment variables
 dotenv.config();
@@ -35,6 +36,7 @@ app.get('/api/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/opportunities', opportunityRoutes);
 
 // 404 handler (must be after all routes)
 app.use(notFoundHandler);
