@@ -89,6 +89,22 @@ services:
     networks:
       - bd_network
 
+  # Frontend Application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bd_pipeline_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - bd_network
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+
 networks:
   bd_network:
     driver: bridge

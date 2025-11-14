@@ -51,7 +51,7 @@ export default function OpportunityEdit() {
 
     try {
       setIsSubmitting(true);
-      await api.updateOpportunity(id, values);
+      await api.updateOpportunity(id, values as any);
       toast.success('Opportunity updated successfully!');
       navigate('/opportunities');
     } catch (error: any) {

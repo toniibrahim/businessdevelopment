@@ -11,6 +11,17 @@ export class DashboardController {
   async getIndividual(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const currentUser = req.user;
+
+      if (!currentUser) {
+        res.status(401).json({
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'User not authenticated',
+          },
+        });
+        return;
+      }
+
       let userId: string;
 
       // If userId is provided in params, check authorization
@@ -49,6 +60,17 @@ export class DashboardController {
   async getTeam(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const currentUser = req.user;
+
+      if (!currentUser) {
+        res.status(401).json({
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'User not authenticated',
+          },
+        });
+        return;
+      }
+
       let teamId: string;
 
       // If teamId is provided in params
@@ -89,7 +111,7 @@ export class DashboardController {
    * Get global dashboard (admin only)
    * GET /api/dashboard/global
    */
-  async getGlobal(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getGlobal(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const dashboard = await dashboardService.getGlobalDashboard();
       res.status(200).json(dashboard);

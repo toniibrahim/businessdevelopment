@@ -69,96 +69,96 @@ export enum OpportunityStage {
 @Entity('opportunities')
 export class Opportunity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
   @Index()
-  project_name: string;
+  project_name!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'owner_id' })
-  owner: User;
+  owner!: User;
 
   @Column({ type: 'uuid' })
   @Index()
-  owner_id: string;
+  owner_id!: string;
 
   @ManyToOne(() => Team)
   @JoinColumn({ name: 'team_id' })
-  team: Team;
+  team!: Team;
 
   @Column({ type: 'uuid' })
   @Index()
-  team_id: string;
+  team_id!: string;
 
   // Basic Information
   @Column({ type: 'text', nullable: true })
-  update_notes: string;
+  update_notes!: string;
 
   @Column({
     type: 'enum',
     enum: ServiceType,
   })
-  service_type: ServiceType;
+  service_type!: ServiceType;
 
   @Column({
     type: 'enum',
     enum: SectorType,
   })
-  sector_type: SectorType;
+  sector_type!: SectorType;
 
   @Column({ type: 'decimal', precision: 15, scale: 2 })
-  original_amount: number;
+  original_amount!: number;
 
   @Column({ type: 'decimal', precision: 5, scale: 4, default: 0.13 })
-  gross_margin_percentage: number;
+  gross_margin_percentage!: number;
 
   // Probability Scoring Factors
   @Column({ nullable: true })
-  project_type: string;
+  project_type!: string;
 
   @Column({
     type: 'enum',
     enum: ProjectMaturity,
   })
-  project_maturity: ProjectMaturity;
+  project_maturity!: ProjectMaturity;
 
   @Column({
     type: 'enum',
     enum: ClientType,
   })
-  client_type: ClientType;
+  client_type!: ClientType;
 
   @Column({
     type: 'enum',
     enum: ClientRelationship,
   })
-  client_relationship: ClientRelationship;
+  client_relationship!: ClientRelationship;
 
   @Column({ type: 'boolean', default: false })
-  conservative_approach: boolean;
+  conservative_approach!: boolean;
 
   // Calculated Fields
   @Column({ type: 'decimal', precision: 5, scale: 4 })
-  probability_score: number;
+  probability_score!: number;
 
   @Column({ type: 'decimal', precision: 15, scale: 2 })
-  weighted_amount: number;
+  weighted_amount!: number;
 
   @Column({ type: 'decimal', precision: 15, scale: 2 })
-  gross_margin_amount: number;
+  gross_margin_amount!: number;
 
   // Timeline
   @Column({ type: 'date' })
   @Index()
-  starting_date: Date;
+  starting_date!: Date;
 
   @Column({ type: 'date' })
   @Index()
-  closing_date: Date;
+  closing_date!: Date;
 
   @Column({ type: 'integer' })
-  duration_months: number;
+  duration_months!: number;
 
   // Status & Tracking
   @Column({
@@ -167,51 +167,51 @@ export class Opportunity {
     default: OpportunityStatus.ACTIVE,
   })
   @Index()
-  status: OpportunityStatus;
+  status!: OpportunityStatus;
 
   @Column({
     type: 'enum',
     enum: OpportunityStage,
   })
   @Index()
-  stage: OpportunityStage;
+  stage!: OpportunityStage;
 
   @Column({ type: 'decimal', precision: 5, scale: 4, nullable: true })
-  win_probability_override: number;
+  win_probability_override!: number;
 
   // Client Relationship
   @ManyToOne(() => ClientCompany, { nullable: true })
   @JoinColumn({ name: 'client_id' })
-  client: ClientCompany;
+  client!: ClientCompany;
 
   @Column({ type: 'uuid', nullable: true })
-  client_id: string;
+  client_id!: string;
 
   // Metadata
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'created_by_id' })
-  created_by: User;
+  created_by!: User;
 
   @Column({ type: 'uuid' })
-  created_by_id: string;
+  created_by_id!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'last_modified_by_id' })
-  last_modified_by: User;
+  last_modified_by!: User;
 
   @Column({ type: 'uuid' })
-  last_modified_by_id: string;
+  last_modified_by_id!: string;
 
   // Relations
   @OneToMany(() => RevenueDistribution, (rd) => rd.opportunity)
-  revenue_distribution: RevenueDistribution[];
+  revenue_distribution!: RevenueDistribution[];
 
   @OneToMany(() => ActivityLog, (al) => al.opportunity)
-  activities: ActivityLog[];
+  activities!: ActivityLog[];
 }

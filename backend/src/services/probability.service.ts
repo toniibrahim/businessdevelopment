@@ -23,7 +23,6 @@ export interface ProbabilityBreakdown {
 }
 
 export class ProbabilityService {
-  private coefficientsCache: Map<string, number> = new Map();
   private readonly CACHE_TTL = 3600; // 1 hour
   private readonly CACHE_KEY = 'probability:coefficients';
 

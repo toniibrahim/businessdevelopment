@@ -18,11 +18,10 @@ import {
 } from '@mui/material';
 import {
   TrendingUp,
-  AttachMoney,
-  Assessment,
   CheckCircle,
   Group,
   Star,
+  AttachMoney,
 } from '@mui/icons-material';
 import {
   PieChart,
@@ -295,7 +294,7 @@ export default function TeamDashboard() {
                       fill="#8884d8"
                       dataKey="count"
                     >
-                      {stageData.map((entry, index) => (
+                      {stageData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

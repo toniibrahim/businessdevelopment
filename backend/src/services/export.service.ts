@@ -1,7 +1,6 @@
 import ExcelJS from 'exceljs';
 import { AppDataSource } from '../config/database';
-import { Opportunity } from '../entities';
-import { OpportunityStatus, OpportunityStage } from '../entities/opportunity.entity';
+import { Opportunity, OpportunityStatus, OpportunityStage } from '../entities';
 import { format } from 'date-fns';
 
 interface ExportFilters {
@@ -90,7 +89,7 @@ export class ExportService {
         owner_name: opp.owner ? `${opp.owner.first_name} ${opp.owner.last_name}` : '',
         team_name: opp.owner?.team?.name || '',
         created_at: format(new Date(opp.created_at), 'yyyy-MM-dd HH:mm'),
-        notes: opp.notes || '',
+        notes: opp.update_notes || '',
       });
     });
 
@@ -188,7 +187,7 @@ export class ExportService {
         opp.owner ? this.escapeCSV(`${opp.owner.first_name} ${opp.owner.last_name}`) : '',
         opp.owner?.team ? this.escapeCSV(opp.owner.team.name) : '',
         format(new Date(opp.created_at), 'yyyy-MM-dd HH:mm'),
-        this.escapeCSV(opp.notes || ''),
+        this.escapeCSV(opp.update_notes || ''),
       ];
 
       csv += row.join(',') + '\n';
@@ -325,7 +324,7 @@ export class ExportService {
 
     if (filters.search) {
       query.andWhere(
-        '(opportunity.project_name ILIKE :search OR opportunity.notes ILIKE :search)',
+        '(opportunity.project_name ILIKE :search OR opportunity.update_notes ILIKE :search)',
         { search: `%${filters.search}%` }
       );
     }

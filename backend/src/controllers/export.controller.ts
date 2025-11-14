@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import exportService from '../services/export.service';
-import { OpportunityStatus, OpportunityStage } from '../entities/opportunity.entity';
+import { OpportunityStatus, OpportunityStage } from '../entities';
 
 export class ExportController {
   /**
@@ -14,6 +14,16 @@ export class ExportController {
   ): Promise<void> {
     try {
       const currentUser = req.user;
+
+      if (!currentUser) {
+        res.status(401).json({
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'User not authenticated',
+          },
+        });
+        return;
+      }
 
       // Parse filters from query params
       const filters = {
@@ -42,7 +52,7 @@ export class ExportController {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       );
       res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.setHeader('Content-Length', buffer.length);
+      res.setHeader('Content-Length', buffer.byteLength);
 
       // Send file
       res.send(buffer);
@@ -62,6 +72,16 @@ export class ExportController {
   ): Promise<void> {
     try {
       const currentUser = req.user;
+
+      if (!currentUser) {
+        res.status(401).json({
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'User not authenticated',
+          },
+        });
+        return;
+      }
 
       // Parse filters from query params
       const filters = {
@@ -108,6 +128,16 @@ export class ExportController {
     try {
       const currentUser = req.user;
 
+      if (!currentUser) {
+        res.status(401).json({
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'User not authenticated',
+          },
+        });
+        return;
+      }
+
       // Parse filters from query params
       const filters = {
         status: req.query.status as OpportunityStatus,
@@ -135,7 +165,7 @@ export class ExportController {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       );
       res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.setHeader('Content-Length', buffer.length);
+      res.setHeader('Content-Length', buffer.byteLength);
 
       // Send file
       res.send(buffer);

@@ -4,14 +4,12 @@ import {
   Box,
   Button,
   Card,
-  CardContent,
   Chip,
   IconButton,
   Menu,
   MenuItem,
   TextField,
   Typography,
-  InputAdornment,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -20,7 +18,6 @@ import {
 } from '@mui/material';
 import {
   Add as AddIcon,
-  Search as SearchIcon,
   MoreVert as MoreIcon,
   Visibility as ViewIcon,
   Edit as EditIcon,

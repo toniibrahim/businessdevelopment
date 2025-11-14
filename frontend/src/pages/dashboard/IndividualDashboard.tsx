@@ -12,11 +12,9 @@ import {
 } from '@mui/material';
 import {
   TrendingUp,
-  AttachMoney,
-  Assessment,
   CheckCircle,
-  Cancel,
-  Timeline as TimelineIcon,
+  Assessment,
+  AttachMoney,
 } from '@mui/icons-material';
 import {
   PieChart,
@@ -33,20 +31,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { format, parseISO } from 'date-fns';
 import { toast } from 'react-toastify';
 import api from '../../services/api';
 import { useAuthStore } from '../../context/AuthContext';
 import type { IndividualDashboard as IndividualDashboardType } from '../../types';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
-const STATUS_COLORS = {
-  Active: '#FF9800',
-  Won: '#4CAF50',
-  Lost: '#F44336',
-  'On Hold': '#FFC107',
-  Cancelled: '#9E9E9E',
-};
 
 export default function IndividualDashboard() {
   const { user } = useAuthStore();
@@ -244,7 +234,7 @@ export default function IndividualDashboard() {
                       fill="#8884d8"
                       dataKey="count"
                     >
-                      {stageData.map((entry, index) => (
+                      {stageData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

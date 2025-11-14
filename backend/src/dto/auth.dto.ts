@@ -3,21 +3,21 @@ import { UserRole } from '../entities';
 
 export class RegisterDto {
   @IsEmail()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(3)
-  username: string;
+  username!: string;
 
   @IsString()
   @MinLength(8)
-  password: string;
+  password!: string;
 
   @IsString()
-  first_name: string;
+  first_name!: string;
 
   @IsString()
-  last_name: string;
+  last_name!: string;
 
   @IsOptional()
   @IsString()
@@ -30,36 +30,36 @@ export class RegisterDto {
 
 export class LoginDto {
   @IsString()
-  username: string;
+  username!: string;
 
   @IsString()
-  password: string;
+  password!: string;
 }
 
 export class RefreshTokenDto {
   @IsString()
-  refresh_token: string;
+  refresh_token!: string;
 }
 
 export class ForgotPasswordDto {
   @IsEmail()
-  email: string;
+  email!: string;
 }
 
 export class ResetPasswordDto {
   @IsString()
-  token: string;
+  token!: string;
 
   @IsString()
   @MinLength(8)
-  new_password: string;
+  new_password!: string;
 }
 
 export class ChangePasswordDto {
   @IsString()
-  current_password: string;
+  current_password!: string;
 
   @IsString()
   @MinLength(8)
-  new_password: string;
+  new_password!: string;
 }

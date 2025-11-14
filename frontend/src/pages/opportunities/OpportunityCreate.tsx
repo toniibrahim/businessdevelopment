@@ -22,7 +22,7 @@ export default function OpportunityCreate() {
   const handleSubmit = async (values: OpportunityFormValues) => {
     try {
       setIsSubmitting(true);
-      await api.createOpportunity(values);
+      await api.createOpportunity(values as any);
       toast.success('Opportunity created successfully!');
       navigate('/opportunities');
     } catch (error: any) {

@@ -26,39 +26,39 @@ export enum ActivityType {
 @Entity('activity_logs')
 export class ActivityLog {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @ManyToOne(() => Opportunity, (opp) => opp.activities, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'opportunity_id' })
-  opportunity: Opportunity;
+  opportunity!: Opportunity;
 
   @Column({ type: 'uuid' })
   @Index()
-  opportunity_id: string;
+  opportunity_id!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user!: User;
 
   @Column({ type: 'uuid' })
-  user_id: string;
+  user_id!: string;
 
   @Column({
     type: 'enum',
     enum: ActivityType,
   })
-  activity_type: ActivityType;
+  activity_type!: ActivityType;
 
   @Column({ type: 'text' })
-  description: string;
+  description!: string;
 
   @Column({ type: 'jsonb', nullable: true })
-  old_value: any;
+  old_value!: any;
 
   @Column({ type: 'jsonb', nullable: true })
-  new_value: any;
+  new_value!: any;
 
   @CreateDateColumn()
   @Index()
-  created_at: Date;
+  created_at!: Date;
 }

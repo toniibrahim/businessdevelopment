@@ -66,7 +66,6 @@ const validationSchema = yup.object({
 export default function OpportunityForm({
   initialValues,
   onSubmit,
-  isSubmitting = false,
 }: OpportunityFormProps) {
   const formik = useFormik<OpportunityFormValues>({
     initialValues: {

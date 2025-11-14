@@ -133,6 +133,11 @@ class ApiService {
     return response.data;
   }
 
+  async createUser(data: Partial<User> & { password: string }): Promise<User> {
+    const response = await this.api.post<User>('/users', data);
+    return response.data;
+  }
+
   async updateUser(id: string, data: Partial<User>): Promise<User> {
     const response = await this.api.put<User>(`/users/${id}`, data);
     return response.data;

@@ -1,6 +1,5 @@
 import { AppDataSource } from '../config/database';
-import { Opportunity, User, Team } from '../entities';
-import { OpportunityStatus, OpportunityStage } from '../entities/opportunity.entity';
+import { Opportunity, User, Team, OpportunityStatus } from '../entities';
 
 interface IndividualDashboard {
   user: {
@@ -230,15 +229,18 @@ export class DashboardService {
     // Get team details
     const team = await this.teamRepository.findOne({
       where: { id: teamId },
-      relations: ['manager', 'members'],
+      relations: ['manager'],
     });
 
     if (!team) {
       throw new Error('Team not found');
     }
 
-    // Get all team members' IDs
-    const memberIds = team.members.map((m) => m.id);
+    // Get all team members
+    const teamMembers = await this.userRepository.find({
+      where: { team_id: teamId },
+    });
+    const memberIds = teamMembers.map((m) => m.id);
 
     // Get all team opportunities
     const opportunities = await this.opportunityRepository
@@ -249,7 +251,7 @@ export class DashboardService {
       .getMany();
 
     // Calculate metrics
-    const totalMembers = team.members.length;
+    const totalMembers = teamMembers.length;
     const totalOpportunities = opportunities.length;
     const activeOpportunities = opportunities.filter(
       (o) => o.status === OpportunityStatus.ACTIVE
@@ -281,7 +283,7 @@ export class DashboardService {
 
     // Member performance
     const membersPerformance = await Promise.all(
-      team.members.map(async (member) => {
+      teamMembers.map(async (member) => {
         const memberOpps = opportunities.filter((o) => o.owner.id === member.id);
         const memberWonOpps = memberOpps.filter(
           (o) => o.status === OpportunityStatus.WON
@@ -388,13 +390,15 @@ export class DashboardService {
       wonOpportunities > 0 ? wonValue / wonOpportunities : 0;
 
     // Get all teams with performance
-    const teams = await this.teamRepository.find({
-      relations: ['members'],
-    });
+    const teams = await this.teamRepository.find();
+
+    // Get all users for team member mapping
+    const users = await this.userRepository.find();
 
     const teamsPerformance = await Promise.all(
       teams.map(async (team) => {
-        const memberIds = team.members.map((m) => m.id);
+        const teamMembers = users.filter((u) => u.team_id === team.id);
+        const memberIds = teamMembers.map((m) => m.id);
         const teamOpps = opportunities.filter((o) =>
           memberIds.includes(o.owner.id)
         );
@@ -412,7 +416,7 @@ export class DashboardService {
         return {
           team_id: team.id,
           team_name: team.name,
-          members_count: team.members.length,
+          members_count: teamMembers.length,
           opportunities_count: teamOpps.length,
           pipeline_value: Math.round(teamPipelineValue * 100) / 100,
           won_count: teamWonOpps.length,
@@ -466,8 +470,16 @@ export class DashboardService {
    */
   private groupByField(
     opportunities: Opportunity[],
+    field: 'stage'
+  ): { stage: string; count: number; total_value: number }[];
+  private groupByField(
+    opportunities: Opportunity[],
+    field: 'status'
+  ): { status: string; count: number; total_value: number }[];
+  private groupByField(
+    opportunities: Opportunity[],
     field: 'stage' | 'status'
-  ): { stage?: string; status?: string; count: number; total_value: number }[] {
+  ): any[] {
     const groups = new Map<string, { count: number; total_value: number }>();
 
     opportunities.forEach((opp) => {

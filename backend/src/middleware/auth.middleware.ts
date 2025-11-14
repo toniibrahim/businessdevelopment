@@ -80,7 +80,7 @@ export const authorize = (...roles: UserRole[]) => {
 /**
  * Optional authentication - doesn't fail if no token provided
  */
-export const optionalAuth = (req: Request, res: Response, next: NextFunction): void => {
+export const optionalAuth = (req: Request, _res: Response, next: NextFunction): void => {
   try {
     const authHeader = req.headers.authorization;
 

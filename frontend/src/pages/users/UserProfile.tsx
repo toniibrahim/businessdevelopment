@@ -32,7 +32,7 @@ import { useAuthStore } from '../../context/AuthContext';
 import type { User } from '../../types';
 
 export default function UserProfile() {
-  const { user: currentUser, setUser } = useAuthStore();
+  const { setUser } = useAuthStore();
   const [profile, setProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -90,7 +90,7 @@ export default function UserProfile() {
     }
 
     try {
-      const payload = {
+      const payload: any = {
         first_name: profileFormData.first_name,
         last_name: profileFormData.last_name,
         email: profileFormData.email,

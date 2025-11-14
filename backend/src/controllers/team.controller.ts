@@ -7,7 +7,7 @@ export class TeamController {
    * Get all teams
    * GET /api/teams
    */
-  async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getAll(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const teams = await teamService.findAll();
       res.status(200).json({ items: teams, total: teams.length });

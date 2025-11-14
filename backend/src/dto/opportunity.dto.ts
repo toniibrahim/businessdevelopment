@@ -22,21 +22,21 @@ import {
 
 export class CreateOpportunityDto {
   @IsString()
-  project_name: string;
+  project_name!: string;
 
   @IsOptional()
   @IsString()
   update_notes?: string;
 
   @IsEnum(ServiceType)
-  service_type: ServiceType;
+  service_type!: ServiceType;
 
   @IsEnum(SectorType)
-  sector_type: SectorType;
+  sector_type!: SectorType;
 
   @IsNumber()
   @Min(0)
-  original_amount: number;
+  original_amount!: number;
 
   @IsOptional()
   @IsNumber()
@@ -49,23 +49,23 @@ export class CreateOpportunityDto {
   project_type?: string;
 
   @IsEnum(ProjectMaturity)
-  project_maturity: ProjectMaturity;
+  project_maturity!: ProjectMaturity;
 
   @IsEnum(ClientType)
-  client_type: ClientType;
+  client_type!: ClientType;
 
   @IsEnum(ClientRelationship)
-  client_relationship: ClientRelationship;
+  client_relationship!: ClientRelationship;
 
   @IsOptional()
   @IsBoolean()
   conservative_approach?: boolean;
 
   @IsDateString()
-  starting_date: string;
+  starting_date!: string;
 
   @IsDateString()
-  closing_date: string;
+  closing_date!: string;
 
   @IsOptional()
   @IsEnum(OpportunityStatus)
@@ -175,7 +175,7 @@ export class UpdateOpportunityDto {
 
 export class UpdateOpportunityStatusDto {
   @IsEnum(OpportunityStatus)
-  status: OpportunityStatus;
+  status!: OpportunityStatus;
 
   @IsOptional()
   @IsEnum(OpportunityStage)
@@ -189,7 +189,7 @@ export class UpdateOpportunityStatusDto {
 export class BulkUpdateOpportunitiesDto {
   @IsArray()
   @IsUUID('4', { each: true })
-  opportunity_ids: string[];
+  opportunity_ids!: string[];
 
   @IsOptional()
   @IsEnum(OpportunityStage)

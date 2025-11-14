@@ -3,14 +3,14 @@ import { RelationshipTier } from '../entities';
 
 export class CreateClientDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsOptional()
   @IsString()
   industry?: string;
 
   @IsEnum(RelationshipTier)
-  relationship_tier: RelationshipTier;
+  relationship_tier!: RelationshipTier;
 
   @IsOptional()
   @IsString()

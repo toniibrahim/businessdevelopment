@@ -75,7 +75,7 @@ export class AuthController {
    * Logout user
    * POST /api/auth/logout
    */
-  async logout(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async logout(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       // In a more advanced implementation, we would blacklist the token
       // For now, just return success (client will discard tokens)

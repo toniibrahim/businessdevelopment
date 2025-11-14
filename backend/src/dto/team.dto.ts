@@ -2,10 +2,10 @@ import { IsString, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateTeamDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsUUID()
-  manager_id: string;
+  manager_id!: string;
 
   @IsOptional()
   @IsString()

@@ -21,25 +21,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineOppositeContent,
   Paper,
+  Stack,
 } from '@mui/material';
 import {
   ArrowBack as BackIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   ChangeCircle as StatusIcon,
-  Timeline as TimelineIcon,
   TrendingUp as TrendingIcon,
   Person as PersonIcon,
-  Update as UpdateIcon,
-  Add as AddIcon,
+  Timeline as TimelineIcon,
 } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
@@ -177,18 +169,6 @@ export default function OpportunityDetail() {
     }
   };
 
-  const getActivityIcon = (activityType: string) => {
-    switch (activityType) {
-      case 'created':
-        return <AddIcon />;
-      case 'updated':
-        return <UpdateIcon />;
-      case 'status_changed':
-        return <StatusIcon />;
-      default:
-        return <TimelineIcon />;
-    }
-  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -538,62 +518,42 @@ export default function OpportunityDetail() {
                   No activities yet
                 </Typography>
               ) : (
-                <Timeline
-                  sx={{
-                    p: 0,
-                    m: 0,
-                    '& .MuiTimelineItem-root:before': { flex: 0, padding: 0 },
-                  }}
-                >
-                  {activities.map((activity, index) => (
-                    <TimelineItem key={activity.id}>
-                      <TimelineOppositeContent
-                        sx={{ flex: 0.2, paddingLeft: 0, paddingRight: 1 }}
-                        color="text.secondary"
-                        variant="caption"
+                <Stack spacing={2}>
+                  {activities.map((activity) => (
+                    <Paper key={activity.id} elevation={0} sx={{ p: 2, bgcolor: 'grey.50', borderLeft: 3, borderColor: 'primary.main' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                        <Typography variant="body2" fontWeight="medium">
+                          {activity.description}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {format(parseISO(activity.created_at), 'MMM dd, HH:mm')}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          mt: 0.5,
+                        }}
                       >
-                        {format(parseISO(activity.created_at), 'MMM dd')}
-                        <br />
-                        {format(parseISO(activity.created_at), 'HH:mm')}
-                      </TimelineOppositeContent>
-                      <TimelineSeparator>
-                        <TimelineDot color="primary" variant="outlined">
-                          {getActivityIcon(activity.activity_type)}
-                        </TimelineDot>
-                        {index < activities.length - 1 && <TimelineConnector />}
-                      </TimelineSeparator>
-                      <TimelineContent>
-                        <Paper elevation={0} sx={{ p: 1.5, bgcolor: 'grey.50' }}>
-                          <Typography variant="body2" fontWeight="medium">
-                            {activity.description}
-                          </Typography>
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 0.5,
-                              mt: 0.5,
-                            }}
-                          >
-                            <PersonIcon sx={{ fontSize: 14 }} color="action" />
-                            <Typography variant="caption" color="text.secondary">
-                              {activity.user.first_name} {activity.user.last_name}
-                            </Typography>
-                          </Box>
-                          {activity.old_value && activity.new_value && (
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                              sx={{ display: 'block', mt: 0.5 }}
-                            >
-                              {activity.old_value} → {activity.new_value}
-                            </Typography>
-                          )}
-                        </Paper>
-                      </TimelineContent>
-                    </TimelineItem>
+                        <PersonIcon sx={{ fontSize: 14 }} color="action" />
+                        <Typography variant="caption" color="text.secondary">
+                          {activity.user.first_name} {activity.user.last_name}
+                        </Typography>
+                      </Box>
+                      {activity.old_value && activity.new_value && (
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ display: 'block', mt: 0.5 }}
+                        >
+                          {activity.old_value} → {activity.new_value}
+                        </Typography>
+                      )}
+                    </Paper>
                   ))}
-                </Timeline>
+                </Stack>
               )}
             </CardContent>
           </Card>

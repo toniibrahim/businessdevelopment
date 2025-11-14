@@ -17,26 +17,26 @@ export enum FactorType {
 @Entity('probability_coefficients')
 export class ProbabilityCoefficient {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({
     type: 'enum',
     enum: FactorType,
   })
-  factor_type: FactorType;
+  factor_type!: FactorType;
 
   @Column()
-  factor_value: string;
+  factor_value!: string;
 
   @Column({ type: 'decimal', precision: 5, scale: 4 })
-  coefficient: number;
+  coefficient!: number;
 
   @Column({ type: 'boolean', default: true })
-  is_active: boolean;
+  is_active!: boolean;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 }

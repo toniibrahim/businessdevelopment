@@ -6,6 +6,7 @@ export interface TokenPayload {
   userId: string;
   email: string;
   role: UserRole;
+  teamId?: string;
 }
 
 /**
@@ -13,8 +14,8 @@ export interface TokenPayload {
  */
 export const generateAccessToken = (payload: TokenPayload): string => {
   return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.accessExpiration,
-  });
+    expiresIn: config.jwt.accessExpiration as string,
+  } as jwt.SignOptions);
 };
 
 /**
@@ -22,8 +23,8 @@ export const generateAccessToken = (payload: TokenPayload): string => {
  */
 export const generateRefreshToken = (payload: TokenPayload): string => {
   return jwt.sign(payload, config.jwt.refreshSecret, {
-    expiresIn: config.jwt.refreshExpiration,
-  });
+    expiresIn: config.jwt.refreshExpiration as string,
+  } as jwt.SignOptions);
 };
 
 /**

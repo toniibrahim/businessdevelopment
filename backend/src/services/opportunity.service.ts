@@ -1,5 +1,5 @@
 import { AppDataSource } from '../config/database';
-import { Opportunity, ActivityLog, ActivityType, UserRole } from '../entities';
+import { Opportunity, ActivityType, UserRole, OpportunityStatus, OpportunityStage } from '../entities';
 import probabilityService from './probability.service';
 import revenueService from './revenue.service';
 import activityService from './activity.service';
@@ -63,19 +63,29 @@ export class OpportunityService {
 
     // Create opportunity
     const opportunity = opportunityRepository.create({
-      ...data,
+      project_name: data.project_name,
+      update_notes: data.update_notes,
+      service_type: data.service_type,
+      sector_type: data.sector_type,
+      original_amount: data.original_amount,
+      project_type: data.project_type,
+      project_maturity: data.project_maturity,
+      client_type: data.client_type,
+      client_relationship: data.client_relationship,
+      conservative_approach: data.conservative_approach || false,
+      starting_date: startDate,
+      closing_date: closeDate,
+      client_id: data.client_id,
       owner_id: ownerId,
       team_id: teamId,
-      conservative_approach: data.conservative_approach || false,
       gross_margin_percentage: grossMarginPercentage,
       probability_score: probabilityScore,
       weighted_amount: weightedAmount,
       gross_margin_amount: grossMarginAmount,
       duration_months: durationMonths,
-      starting_date: startDate,
-      closing_date: closeDate,
-      status: data.status || 'Active',
-      stage: data.stage || data.project_maturity,
+      status: (data.status || OpportunityStatus.ACTIVE) as OpportunityStatus,
+      stage: (data.stage || data.project_maturity) as OpportunityStage,
+      win_probability_override: data.win_probability_override,
       created_by_id: userId,
       last_modified_by_id: userId,
     });

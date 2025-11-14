@@ -1,8 +1,7 @@
 import { AppDataSource } from '../config/database';
 import { User, UserRole } from '../entities';
 import { hashPassword, comparePassword, validatePasswordStrength } from '../utils/password.util';
-import { generateTokenPair, verifyRefreshToken, TokenPayload } from '../utils/jwt.util';
-import { v4 as uuidv4 } from 'uuid';
+import { generateTokenPair, verifyRefreshToken } from '../utils/jwt.util';
 import crypto from 'crypto';
 
 const userRepository = AppDataSource.getRepository(User);
@@ -210,8 +209,8 @@ export class AuthService {
 
     // Hash new password
     user.password_hash = await hashPassword(newPassword);
-    user.reset_password_token = null;
-    user.reset_password_expires = null;
+    user.reset_password_token = null as any;
+    user.reset_password_expires = null as any;
 
     await userRepository.save(user);
   }

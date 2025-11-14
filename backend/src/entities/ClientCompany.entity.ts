@@ -18,39 +18,39 @@ export enum RelationshipTier {
 @Entity('client_companies')
 export class ClientCompany {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
   @Index()
-  name: string;
+  name!: string;
 
   @Column({ nullable: true })
-  industry: string;
+  industry!: string;
 
   @Column({
     type: 'enum',
     enum: RelationshipTier,
   })
-  relationship_tier: RelationshipTier;
+  relationship_tier!: RelationshipTier;
 
   @Column({ nullable: true })
-  contact_person: string;
+  contact_person!: string;
 
   @Column({ nullable: true })
-  email: string;
+  email!: string;
 
   @Column({ nullable: true })
-  phone: string;
+  phone!: string;
 
   @Column({ type: 'text', nullable: true })
-  address: string;
+  address!: string;
 
   @Column({ type: 'text', nullable: true })
-  notes: string;
+  notes!: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 }

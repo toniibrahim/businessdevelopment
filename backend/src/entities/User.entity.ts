@@ -19,56 +19,56 @@ export enum UserRole {
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({ unique: true })
   @Index()
-  email: string;
+  email!: string;
 
   @Column({ unique: true })
-  username: string;
+  username!: string;
 
   @Column()
-  password_hash: string;
+  password_hash!: string;
 
   @Column()
-  first_name: string;
+  first_name!: string;
 
   @Column()
-  last_name: string;
+  last_name!: string;
 
   @Column({
     type: 'enum',
     enum: UserRole,
     default: UserRole.SALES,
   })
-  role: UserRole;
+  role!: UserRole;
 
   @ManyToOne(() => Team, { nullable: true })
   @JoinColumn({ name: 'team_id' })
-  team: Team;
+  team!: Team;
 
   @Column({ type: 'uuid', nullable: true })
-  team_id: string;
+  team_id!: string;
 
   @Column({ default: true })
-  is_active: boolean;
+  is_active!: boolean;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 
   @Column({ type: 'timestamp', nullable: true })
-  last_login: Date;
+  last_login!: Date;
 
   @Column({ nullable: true })
-  profile_picture_url: string;
+  profile_picture_url!: string;
 
   @Column({ nullable: true })
-  reset_password_token: string;
+  reset_password_token!: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  reset_password_expires: Date;
+  reset_password_expires!: Date;
 }

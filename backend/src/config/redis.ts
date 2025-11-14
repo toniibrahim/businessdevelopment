@@ -3,8 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Build Redis URL from environment variables
+const redisHost = process.env.REDIS_HOST || 'localhost';
+const redisPort = process.env.REDIS_PORT || '6379';
+const redisUrl = process.env.REDIS_URL || `redis://${redisHost}:${redisPort}`;
+
 const redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379',
+  url: redisUrl,
   password: process.env.REDIS_PASSWORD || undefined,
 });
 
@@ -16,12 +21,18 @@ redisClient.on('connect', () => {
   console.log('✅ Redis connection established');
 });
 
+redisClient.on('ready', () => {
+  console.log('✅ Redis client ready');
+});
+
 export const initializeRedis = async (): Promise<void> => {
   try {
     await redisClient.connect();
+    console.log(`✅ Connected to Redis at ${redisUrl}`);
   } catch (error) {
     console.error('❌ Error connecting to Redis:', error);
-    process.exit(1);
+    console.warn('⚠️  Application will continue without Redis caching');
+    // Don't exit - allow app to run without Redis
   }
 };
 

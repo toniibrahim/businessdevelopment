@@ -43,7 +43,7 @@ import type { Opportunity, OpportunityFilters, OpportunityStatus } from '../../t
 
 export default function OpportunityList() {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const { user: _user } = useAuthStore();
 
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(false);
@@ -135,15 +135,15 @@ export default function OpportunityList() {
     }
   };
 
-  const handleExport = async (format: 'excel' | 'csv' | 'revenue') => {
+  const handleExport = async (exportFormat: 'excel' | 'csv' | 'revenue') => {
     try {
       let blob: Blob;
       let filename: string;
 
-      if (format === 'excel') {
+      if (exportFormat === 'excel') {
         blob = await api.exportOpportunitiesToExcel(filters);
         filename = `opportunities_${format(new Date(), 'yyyy-MM-dd')}.xlsx`;
-      } else if (format === 'csv') {
+      } else if (exportFormat === 'csv') {
         blob = await api.exportOpportunitiesToCSV(filters);
         filename = `opportunities_${format(new Date(), 'yyyy-MM-dd')}.csv`;
       } else {

@@ -6,31 +6,30 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import { User } from './User.entity';
 
 @Entity('teams')
 export class Team {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'manager_id' })
-  manager: User;
+  manager!: User;
 
   @Column({ type: 'uuid' })
-  manager_id: string;
+  manager_id!: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description!: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 }
